@@ -10,8 +10,8 @@ public class Filter {
 		int width = input.getWidth(), height = input.getHeight();
 		for(int y = 0; y<height; y++) {
 			for(int x = 0; x<width; x++) {
-				Color pixel = new Color(input.getRGB(x, y)), newPixel = null;
-				int avg = getAverage(pixel);
+				Color currentPixel = new Color(input.getRGB(x, y)), newPixel = null;
+				int avg = getAverage(currentPixel);
 				newPixel = new Color(avg,avg,avg);
 				input.setRGB(x, y, newPixel.getRGB());
 			}
@@ -24,9 +24,9 @@ public class Filter {
 		int width = input.getWidth(), height = input.getHeight();
 		for(int y=0; y<height; y++) {
 			for(int x=0; x<width; x++) {
-				Color pixel = new Color(input.getRGB(x, y)), newPixel = null; 
-				int avg = getAverage(pixel);
-				int[] colors = getColorValues(pixel);
+				Color currentPixel = new Color(input.getRGB(x, y)), newPixel = null; 
+				int avg = getAverage(currentPixel);
+				int[] colors = getColorValues(currentPixel);
 				if(avg < 128) {
 					int red = colors[0]*2;
 					if(red > 255) {
