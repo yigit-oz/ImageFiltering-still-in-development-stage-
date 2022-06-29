@@ -6,25 +6,25 @@ import javax.imageio.ImageIO;
 
 public class Filter {
 	
-	public static BufferedImage makeGrayscale(BufferedImage input, String name, String fileType, String path) {
+	public static BufferedImage makeGrayscale(BufferedImage input, String name, String fileType, String pathToSave) {
 		int width = input.getWidth(), height = input.getHeight();
 		for(int y = 0; y<height; y++) {
 			for(int x = 0; x<width; x++) {
-				Color currentPixel = new Color(input.getRGB(x, y)), newPixel = null;
+				Color currentPixel = getCurrentPixelColor(input, x, y), newPixel = null;
 				int avg = getAverage(currentPixel);
 				newPixel = new Color(avg,avg,avg);
 				input.setRGB(x, y, newPixel.getRGB());
 			}
 		}
-		saveImage(input, "Gray-"+name, fileType, path);
+		saveImage(input, "Gray-"+name, fileType, pathToSave);
 		return input;
 	}
 	
-	public static BufferedImage makeRed(BufferedImage input, String name, String fileType, String path) {
+	public static BufferedImage makeRed(BufferedImage input, String name, String fileType, String pathToSave) {
 		int width = input.getWidth(), height = input.getHeight();
 		for(int y=0; y<height; y++) {
 			for(int x=0; x<width; x++) {
-				Color currentPixel = new Color(input.getRGB(x, y)), newPixel = null; 
+				Color currentPixel = getCurrentPixelColor(input, x, y), newPixel = null; 
 				int avg = getAverage(currentPixel);
 				int[] colors = getColorValues(currentPixel);
 				if(avg < 128) {
@@ -42,10 +42,15 @@ public class Filter {
 				input.setRGB(x, y, newPixel.getRGB());
 			}
 		}
-		saveImage(input, "Red-"+name, fileType, path);
+		saveImage(input, "Red-"+name, fileType, pathToSave);
 		return input;
 	}
 	
+	public static Color getCurrentPixelColor(BufferedImage input, int x, int y) {
+		Color currentPixel = new Color(input.getRGB(x, y));
+		return currentPixel;
+	}
+
 	public static int getAverage(Color pixel) {
 		int result = (pixel.getRed() + pixel.getGreen() + pixel.getBlue())/3;
 		return result;
@@ -56,9 +61,9 @@ public class Filter {
 		return colors;
 	}
 	
-	public static void saveImage(BufferedImage image, String name, String fileType, String path) {
+	public static void saveImage(BufferedImage image, String name, String fileType, String pathToSave) {
 		try {
-			File f = new File(path + name);
+			File f = new File(pathToSave + name);
 			ImageIO.write(image, fileType, f);
 		} catch (IOException e) {
 			System.out.println(e);
