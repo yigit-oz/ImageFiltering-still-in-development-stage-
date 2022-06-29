@@ -10,8 +10,8 @@ public class Filter {
 		int width = input.getWidth(), height = input.getHeight();
 		for(int y = 0; y<height; y++) {
 			for(int x = 0; x<width; x++) {
-				Color currentPixel = getCurrentPixelColor(input, x, y), newPixel = null;
-				int avg = getAverage(currentPixel);
+				Color currentPixelColor = getCurrentPixelColor(input, x, y), newPixel = null;
+				int avg = getAverage(currentPixelColor);
 				newPixel = new Color(avg,avg,avg);
 				input.setRGB(x, y, newPixel.getRGB());
 			}
@@ -24,9 +24,9 @@ public class Filter {
 		int width = input.getWidth(), height = input.getHeight();
 		for(int y=0; y<height; y++) {
 			for(int x=0; x<width; x++) {
-				Color currentPixel = getCurrentPixelColor(input, x, y), newPixel = null; 
-				int avg = getAverage(currentPixel);
-				int[] colors = getColorValues(currentPixel);
+				Color currentPixelColor = getCurrentPixelColor(input, x, y), newPixel = null; 
+				int avg = getAverage(currentPixelColor);
+				int[] colors = getColorValues(currentPixelColor);
 				if(avg < 128) {
 					int red = colors[0]*2;
 					if(red > 255) {
@@ -47,8 +47,8 @@ public class Filter {
 	}
 	
 	public static Color getCurrentPixelColor(BufferedImage input, int x, int y) {
-		Color currentPixel = new Color(input.getRGB(x, y));
-		return currentPixel;
+		Color currentPixelColor = new Color(input.getRGB(x, y));
+		return currentPixelColor;
 	}
 
 	public static int getAverage(Color pixel) {
